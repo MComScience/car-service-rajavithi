@@ -14,6 +14,7 @@ use frontend\modules\app\models\TbAutocomplete;
 use yii\helpers\ArrayHelper;
 use metronic\user\models\Profile;
 use kartik\widgets\Select2;
+use yii\helpers\Url;
 ?>
 <div class="tb-destination-search">
 
@@ -50,14 +51,20 @@ use kartik\widgets\Select2;
     ?>
 
     <?php
-    $dataAutocomplete = TbAutocomplete::find()->all();
+    //$dataAutocomplete = TbAutocomplete::find()->all();
     echo $form->field($model, 'destination')->widget(Typeahead::classname(), [
         'options' => ['placeholder' => 'ปลายทาง...'],
+        'scrollable' => true,
         'pluginOptions' => ['highlight' => true],
         'dataset' => [
             [
-                'local' => ArrayHelper::getColumn($dataAutocomplete, 'destination_name'),
-                'limit' => 10
+                'datumTokenizer' => "Bloodhound.tokenizers.obj.whitespace('value')",
+                'display' => 'value',
+                'prefetch' => Url::to(['autocomplete-list']),
+                'remote' => [
+                    'url' => Url::to(['autocomplete-list']) . '?q=%QUERY',
+                    'wildcard' => '%QUERY'
+                ]
             ]
         ]
     ]);
