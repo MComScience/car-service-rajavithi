@@ -159,15 +159,10 @@ $this->registerJs('var baseUrl = ' . Json::encode(Url::base(true)) . ';', View::
                             ],*/
                             'datatableOptions' => [
                                 "clientOptions" => [
-                                    "dom" => "<'row'<'col-sm-6'l B><'col-sm-6'f>><'row'<'col-xs-12 col-sm-12 col-md-12'tr>><'row'<'col-sm-6'i><'col-sm-6'p>>",
+                                    "dom" => "<'row'<'col-sm-6'l><'col-sm-6'f>><'row'<'col-xs-12 col-sm-12 col-md-12'tr>><'row'<'col-sm-6'i><'col-sm-6'p>>",
                                     "ajax" => [
                                         "url" => Url::base(true) . "/app/administrative/data-user-event-today",
                                         "type" => "GET",
-                                        "complete" => new JsExpression('function(jqXHR, textStatus) {
-                                            var table = $(\'#tb-event-today\').DataTable();
-                                            table.buttons(0).processing( false );
-                                            $(table.buttons(0)[0].node).button("reset");
-                                        }'),
                                     ],
                                     "deferRender" => true,
                                     "responsive" => true,
@@ -214,8 +209,8 @@ $this->registerJs('var baseUrl = ' . Json::encode(Url::base(true)) . ';', View::
                                             //api.initColumnIndex();
                                         }
                                     '),
+                                    /*
                                     "buttons" => [
-                                        /*
                                         [
                                             "text" => Icon::show('refresh') . 'Reload',
                                             "action" => new JsExpression('function ( e, dt, node, config ) {
@@ -235,8 +230,8 @@ $this->registerJs('var baseUrl = ' . Json::encode(Url::base(true)) . ';', View::
                                                 $(node).removeClass("dt-button")
                                                 .addClass("btn btn-outline green");
                                             }'),
-                                        ],*/
-                                    ],
+                                        ],
+                                    ],*/
                                     "select2" => [4, 5, 6],
                                     /*"columnDefs" => [
                                         [ "visible" => false, "targets" => [6,7] ]
