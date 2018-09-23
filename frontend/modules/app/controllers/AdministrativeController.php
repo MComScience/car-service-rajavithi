@@ -111,9 +111,9 @@ class AdministrativeController extends \yii\web\Controller
                                     ' กรุณายืนยันเพื่อรับทราบ!';
                                 $messages[] = $msg;
                             }
-                            /*foreach ($messages as $message) {
+                            foreach ($messages as $message) {
                                 $this->sendLineNotify($message);
-                            }*/
+                            }
                             $transaction->commit();
 
                             return [
