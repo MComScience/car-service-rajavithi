@@ -184,7 +184,7 @@ $today = $formatter->asDate('now', 'php:d/m/') . ($formatter->asDate('now', 'php
                                                 "extend" => "excel",
                                                 "init" => new JsExpression('function ( dt, node, config ) {
                                                     $(node).removeClass("dt-button")
-                                                    .addClass("btn btn-outline green");
+                                                    .addClass("btn btn-outline green-jungle");
                                                 }'),
                                             ],
                                             [
@@ -194,7 +194,7 @@ $today = $formatter->asDate('now', 'php:d/m/') . ($formatter->asDate('now', 'php
                                                 }'),
                                                 "init" => new JsExpression('function ( dt, node, config ) {
                                                     $(node).removeClass("dt-button")
-                                                    .addClass("btn btn-outline red")
+                                                    .addClass("btn btn-outline blue-madison")
                                                     .attr("role", "modal-remote")
                                                     .attr("href", "/app/administrative/create");
                                                 }'),
@@ -440,27 +440,30 @@ function onLoadHistory(){
 }
 
 // socket event
-socket.on('on-create', function(res){
-    dt_tbcartoday.ajax.reload();
-}).on('on-update', function(res){
-    dt_tbcartoday.ajax.reload();
-}).on('on-confirm', function(res){
-    toastr.success(res.data.uname, 'มีการยืนยันรายการ!', {
-        "timeOut": 7000,
-        "positionClass": "toast-top-right",
-        "progressBar": true,
-        "closeButton": true,
+$(function() {
+    socket.on('on-create', function(res){
+        dt_tbcartoday.ajax.reload();
+    }).on('on-update', function(res){
+        dt_tbcartoday.ajax.reload();
+    }).on('on-confirm', function(res){
+        toastr.success(res.data.uname, 'มีการยืนยันรายการ!', {
+            "timeOut": 7000,
+            "positionClass": "toast-top-right",
+            "progressBar": true,
+            "closeButton": true,
+        });
+        dt_tbcartoday.ajax.reload();
+    }).on('on-confirm-exit', function(res){
+        toastr.success(res.data.uname, 'มีการยืนยันออกรถ!', {
+            "timeOut": 7000,
+            "positionClass": "toast-top-right",
+            "progressBar": true,
+            "closeButton": true,
+        });
+        dt_tbcartoday.ajax.reload();
     });
-    dt_tbcartoday.ajax.reload();
-}).on('on-confirm-exit', function(res){
-    toastr.success(res.data.uname, 'มีการยืนยันออกรถ!', {
-        "timeOut": 7000,
-        "positionClass": "toast-top-right",
-        "progressBar": true,
-        "closeButton": true,
-    });
-    dt_tbcartoday.ajax.reload();
 });
+
 // ready load
 onLoadHistory();
 JS

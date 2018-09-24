@@ -13,9 +13,11 @@ use metronic\assets\SweetAlert2Asset;
 use yii\web\View;
 use yii\widgets\Pjax;
 use frontend\assets\SocketIOAsset;
+use metronic\assets\ToastrAsset;
 
 SweetAlert2Asset::register($this);
 SocketIOAsset::register($this);
+ToastrAsset::register($this);
 
 $this->title = 'ยืนยันรายการ';
 
@@ -130,8 +132,9 @@ Metronic = {
                         },
                         dataType: "json",
                         success: function (response) {
-                            $.pjax.reload({container:'#pjax-confirm'});
+                            //$.pjax.reload({container:'#pjax-confirm'});
                             socket.emit('on-confirm', response); //sending data
+                            location.reload();
                             resolve();
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
@@ -177,8 +180,9 @@ Metronic = {
                         },
                         dataType: "json",
                         success: function (response) {
-                            $.pjax.reload({container:'#pjax-confirm'});
+                            //$.pjax.reload({container:'#pjax-confirm'});
                             socket.emit('on-confirm-exit', response); //sending data
+                            location.reload();
                             resolve();
                         },
                         error: function (jqXHR, textStatus, errorThrown) {

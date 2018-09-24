@@ -136,7 +136,7 @@ class TbDestination extends \yii\db\ActiveRecord
 
     public function validateTime($attribute, $params, $validator)
     {
-        if ($this->$attribute < Yii::$app->formatter->asDate('now','php:H:i:s')) {
+        if ($this->$attribute < Yii::$app->formatter->asDate('now','php:H:i:s') && $this->isNewRecord) {
             $this->addError($attribute, 'ไม่สามารถลงเวลาย้อนหลังได้ เวลาปัจจุบัน '.Yii::$app->formatter->asDate('now','php:H:i'));
         }
     }
