@@ -51,8 +51,8 @@ $today = $formatter->asDate('now', 'php:d/m/') . ($formatter->asDate('now', 'php
             <div class="portlet light">
                 <div class="portlet-title tabbable-line">
                     <div class="caption">
-                        <?= Icon::show('user-o font-yellow-crusta') ?>
-                        <span class="caption-subject bold font-yellow-crusta uppercase"> <?= Html::encode($this->title) ?> </span>
+                        <?= Icon::show('user-o font-black') ?>
+                        <span class="caption-subject bold font-black uppercase"> <?= Html::encode($this->title) ?> </span>
                         <span class="caption-helper">
 
                 </span>
@@ -168,6 +168,24 @@ $today = $formatter->asDate('now', 'php:d/m/') . ($formatter->asDate('now', 'php
                                         '),
                                         "buttons" => [
                                             [
+                                                "text" => Icon::show('file-excel-o') . 'Excel',
+                                                "extend" => "excel",
+                                                "init" => new JsExpression('function ( dt, node, config ) {
+                                                    $(node).removeClass("dt-button")
+                                                    .addClass("btn btn-outline green-jungle");
+                                                }'),
+                                            ],
+                                            [
+                                                "text" => Icon::show('file-pdf-o') . 'PDF',
+                                                "action" => new JsExpression('function ( e, dt, node, config ) {
+                                                    window.open("/app/administrative/report-pdf");
+                                                }'),
+                                                "init" => new JsExpression('function ( dt, node, config ) {
+                                                    $(node).removeClass("dt-button")
+                                                    .addClass("btn btn-outline blue");
+                                                }'),
+                                            ],
+                                            [
                                                 "text" => Icon::show('refresh') . 'Reload',
                                                 "action" => new JsExpression('function ( e, dt, node, config ) {
                                                     this.processing( true );
@@ -176,15 +194,7 @@ $today = $formatter->asDate('now', 'php:d/m/') . ($formatter->asDate('now', 'php
                                                 }'),
                                                 "init" => new JsExpression('function ( dt, node, config ) {
                                                     $(node).removeClass("dt-button")
-                                                    .addClass("btn btn-outline green");
-                                                }'),
-                                            ],
-                                            [
-                                                "text" => Icon::show('file-excel-o') . 'Excel',
-                                                "extend" => "excel",
-                                                "init" => new JsExpression('function ( dt, node, config ) {
-                                                    $(node).removeClass("dt-button")
-                                                    .addClass("btn btn-outline green-jungle");
+                                                    .addClass("btn btn-outline red");
                                                 }'),
                                             ],
                                             [
@@ -194,7 +204,7 @@ $today = $formatter->asDate('now', 'php:d/m/') . ($formatter->asDate('now', 'php
                                                 }'),
                                                 "init" => new JsExpression('function ( dt, node, config ) {
                                                     $(node).removeClass("dt-button")
-                                                    .addClass("btn btn-outline blue-madison")
+                                                    .addClass("btn btn-outline green")
                                                     .attr("role", "modal-remote")
                                                     .attr("href", "/app/administrative/create");
                                                 }'),
@@ -324,6 +334,24 @@ $today = $formatter->asDate('now', 'php:d/m/') . ($formatter->asDate('now', 'php
                                                 '),
                                                 "buttons" => [
                                                     [
+                                                        "text" => Icon::show('file-excel-o text-success') . 'Excel',
+                                                        "extend" => "excel",
+                                                        "init" => new JsExpression('function ( dt, node, config ) {
+                                                            $(node).removeClass("dt-button")
+                                                            .addClass("btn btn-outline green-jungle");
+                                                        }'),
+                                                    ],
+                                                   [
+                                                        "text" => Icon::show('file-pdf-o') . 'PDF',
+                                                        "action" => new JsExpression('function ( e, dt, node, config ) {
+                                                            window.open("/app/administrative/report-history-pdf?from_date="+$("#tbdestination-from_date").val()+"&to_date="+$("#tbdestination-to_date").val());
+                                                        }'),
+                                                        "init" => new JsExpression('function ( dt, node, config ) {
+                                                            $(node).removeClass("dt-button")
+                                                            .addClass("btn btn-outline blue");
+                                                        }'),
+                                                    ],
+                                                    [
                                                         "text" => Icon::show('refresh') . 'Reload',
                                                         "action" => new JsExpression('function ( e, dt, node, config ) {
                                                             this.processing( true );
@@ -331,15 +359,7 @@ $today = $formatter->asDate('now', 'php:d/m/') . ($formatter->asDate('now', 'php
                                                         }'),
                                                         "init" => new JsExpression('function ( dt, node, config ) {
                                                             $(node).removeClass("dt-button")
-                                                            .addClass("btn btn-outline green");
-                                                        }'),
-                                                    ],
-                                                    [
-                                                        "text" => Icon::show('file-excel-o text-success') . 'Excel',
-                                                        "extend" => "excel",
-                                                        "init" => new JsExpression('function ( dt, node, config ) {
-                                                            $(node).removeClass("dt-button")
-                                                            .addClass("btn btn-outline green");
+                                                            .addClass("btn btn-outline red");
                                                         }'),
                                                     ],
                                                 ],

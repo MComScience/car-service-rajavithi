@@ -83,7 +83,7 @@ use yii\helpers\Url;
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Reset', ['index'], ['class' => 'btn btn-default']) ?>
+        <?= Html::a('Reset', ['index'], ['class' => 'btn btn-danger']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

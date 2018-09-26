@@ -103,14 +103,14 @@ $this->registerJs('var baseUrl = ' . Json::encode(Url::base(true)) . ';', View::
                                             <span class="check"></span>
                                             <span class="box"></span> รอยืนยัน </label>
                                     </div>
-                                    <div class="md-radio has-success">
+                                    <div class="md-radio has-info">
                                         <input type="radio" id="radio2" name="radio-search" class="md-radiobtn" value="ยืนยันแล้ว">
                                         <label for="radio2">
                                             <span></span>
                                             <span class="check"></span>
                                             <span class="box"></span> ยืนยันแล้ว </label>
                                     </div>
-                                    <div class="md-radio has-error">
+                                    <div class="md-radio has-success">
                                         <input type="radio" id="radio3" name="radio-search" class="md-radiobtn" value="ออกแล้ว">
                                         <label for="radio3">
                                             <span></span>

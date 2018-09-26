@@ -4,4 +4,5 @@ return [
     'supportEmail' => 'support@example.com',
     'user.passwordResetTokenExpire' => 3600,
     'icon-framework' => 'fa',
+    'hospital-name' => 'โรงพยาบาลราชวิถี',
 ];
