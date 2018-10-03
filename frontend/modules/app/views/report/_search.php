@@ -15,6 +15,7 @@ use yii\helpers\ArrayHelper;
 use metronic\user\models\Profile;
 use kartik\widgets\Select2;
 use yii\helpers\Url;
+use kartik\icons\Icon;
 ?>
 <div class="tb-destination-search">
 
@@ -82,8 +83,8 @@ use yii\helpers\Url;
     <?php // echo $form->field($model, 'comment') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Reset', ['index'], ['class' => 'btn btn-danger']) ?>
+        <?= Html::submitButton(Icon::show('search').'Search', ['class' => 'btn btn-primary']) ?>
+       <?= Html::a('<span class="glyphicon glyphicon-repeat"></span>' . ' Reset', ['index'], ['class' => 'btn btn-danger']) ?> 
     </div>
 
     <?php ActiveForm::end(); ?>
