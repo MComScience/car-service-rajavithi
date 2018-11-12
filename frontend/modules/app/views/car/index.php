@@ -117,7 +117,7 @@ $this->registerJs('var baseUrl = ' . Json::encode(Url::base(true)) . ';', View::
                                             <span class="check"></span>
                                             <span class="box"></span> ออกแล้ว </label>
                                     </div>
-                                    <button class="btn btn-sm red btn-outline on-clear-search"><i class="fa fa-refresh"></i>Clear</button>
+                                    <button class="btn btn-sm red btn-outline on-clear-search"><i class="fa fa-repeat"></i>Reset</button>
                                 </div>
                             </div>
                         </div>
