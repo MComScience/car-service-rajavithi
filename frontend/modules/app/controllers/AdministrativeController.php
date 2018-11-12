@@ -109,9 +109,12 @@ class AdministrativeController extends \yii\web\Controller {
                                         ' กรุณายืนยันเพื่อรับทราบ!';
                                 $messages[] = $msg;
                             }
-                            foreach ($messages as $message) {
-                                $this->sendLineNotify($message);
+                            if (Yii::$app->keyStorage->get('line-notify', 'false') == 'true') {
+                                foreach ($messages as $message) {
+                                    $this->sendLineNotify($message);
+                                }
                             }
+
                             $transaction->commit();
 
                             return [
@@ -662,25 +665,27 @@ class AdministrativeController extends \yii\web\Controller {
     }
 
     private function sendLineNotify($message) {
-        $line_api = 'https://notify-api.line.me/api/notify';
-        //$line_token = 'NVDni6LR0c5Kjwc2zVgsjZMgG9FpH39EJTvOu7KqXvB';
-        $line_token = 'BhmpnpvMGWReH8nmyFnHtubB0CpjmFLwPeszBfs8TQe';
+        if (!empty(Yii::$app->keyStorage->get('line-token', null))) {
+            $line_api = 'https://notify-api.line.me/api/notify';
+            //$line_token = 'NVDni6LR0c5Kjwc2zVgsjZMgG9FpH39EJTvOu7KqXvB';
+            $line_token = Yii::$app->keyStorage->get('line-token', '');
 
-        $queryData = ['message' => $message];
-        $queryData = http_build_query($queryData, '', '&');
-        $headerOptions = [
-            'http' => [
-                'method' => 'POST',
-                'header' => "Content-Type: application/x-www-form-urlencoded\r\n"
-                . "Authorization: Bearer " . $line_token . "\r\n"
-                . "Content-Length: " . strlen($queryData) . "\r\n",
-                'content' => $queryData
-            ]
-        ];
-        $context = stream_context_create($headerOptions);
-        $result = file_get_contents($line_api, FALSE, $context);
-        $res = Json::encode($result);
-        return $res;
+            $queryData = ['message' => $message];
+            $queryData = http_build_query($queryData, '', '&');
+            $headerOptions = [
+                'http' => [
+                    'method' => 'POST',
+                    'header' => "Content-Type: application/x-www-form-urlencoded\r\n"
+                    . "Authorization: Bearer " . $line_token . "\r\n"
+                    . "Content-Length: " . strlen($queryData) . "\r\n",
+                    'content' => $queryData
+                ]
+            ];
+            $context = stream_context_create($headerOptions);
+            $result = file_get_contents($line_api, FALSE, $context);
+            $res = Json::encode($result);
+            return $res;
+        }
     }
 
     public function actionReportPdf() {

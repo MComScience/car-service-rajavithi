@@ -181,7 +181,7 @@ $this->registerJs('var action = ' . Json::encode($action) . ';', View::POS_HEAD)
                             <?= Html::activeLabel($model, "[{$i}]user_id", ['class' => 'col-sm-2 control-label']) ?>
                             <div class="col-sm-9">
                                 <?= $form->field($model, "[{$i}]user_id", ['showLabels' => false])->widget(Select2::classname(), [
-                                    'data' => ArrayHelper::map(Profile::find()->asArray()->all(), 'user_id', 'name'),
+                                    'data' => ArrayHelper::map(Profile::find()->where(['profile_type_id' => 3])->asArray()->all(), 'user_id', 'name'),
                                     'options' => [
                                         'placeholder' => 'พนักงานขับรถ...',
                                     ],
@@ -281,7 +281,7 @@ function initTypeahead(id){
     var data = new Bloodhound({
         "datumTokenizer": Bloodhound.tokenizers.obj.whitespace('value'),
         "queryTokenizer": Bloodhound.tokenizers.whitespace,
-        "prefetch": {"url": "http://q-car.local:8082/app/administrative/destination-list"},
+        "prefetch": {"url": 'http://' + window.location.hostname+"/app/administrative/destination-list"},
         "remote": {"url": "/app/administrative/destination-list?q=%QUERY", "wildcard": "%QUERY"}
     });
     kvInitTA('tbdestination-'+id+'-destination', {"highlight":true,"minLength": 2}, [{

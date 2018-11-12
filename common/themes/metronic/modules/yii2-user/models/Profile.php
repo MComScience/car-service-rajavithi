@@ -10,6 +10,7 @@ namespace metronic\user\models;
 use trntv\filekit\behaviors\UploadBehavior;
 use Yii;
 use dektrium\user\models\Profile as BaseProfile;
+use frontend\modules\app\models\TbProfileType;
 
 class Profile extends BaseProfile
 {
@@ -19,6 +20,7 @@ class Profile extends BaseProfile
     {
         $rules = parent::rules();
         $rules[] = [['avatar','avatar_path','avatar_base_url'], 'safe'];
+        $rules[] = [['profile_type_id'], 'safe'];
         return $rules;
     }
 
@@ -38,6 +40,7 @@ class Profile extends BaseProfile
     {
         $labels = parent::attributeLabels();
         $labels['avatar'] = 'รูปประจำตัว';
+        $labels['profile_type_id'] = 'ประเภทผู้ใช้งาน';
         return $labels;
     }
 
@@ -57,5 +60,9 @@ class Profile extends BaseProfile
                 ? Yii::getAlias($path)
                 : $default;
         }
+    }
+     public function getProfileType()
+    {
+        return $this->hasOne(TbProfileType::className(), ['profile_type_id' => 'profile_type_id']);
     }
 }

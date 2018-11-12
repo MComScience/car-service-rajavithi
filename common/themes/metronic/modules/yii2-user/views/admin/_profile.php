@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of the Dektrium project
  *
@@ -11,7 +10,9 @@
 
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
-
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
+use frontend\modules\app\models\TbProfileType;
 /**
  * @var yii\web\View $this
  * @var dektrium\user\models\User $user
@@ -21,27 +22,41 @@ use yii\helpers\Html;
 
 <?php $this->beginContent('@dektrium/user/views/admin/update.php', ['user' => $user]) ?>
 
-<?php $form = ActiveForm::begin([
-    'layout' => 'horizontal',
-    'enableAjaxValidation' => true,
-    'enableClientValidation' => false,
-    'fieldConfig' => [
-        'horizontalCssClasses' => [
-            'wrapper' => 'col-sm-9',
-        ],
-    ],
-]); ?>
+<?php
+$form = ActiveForm::begin([
+            'layout' => 'horizontal',
+            'enableAjaxValidation' => true,
+            'enableClientValidation' => false,
+            'fieldConfig' => [
+                'horizontalCssClasses' => [
+                    'wrapper' => 'col-sm-9',
+                ],
+            ],
+        ]);
+?>
 
 <?= $form->field($profile, 'name') ?>
+<?=
+$form->field($profile, 'profile_type_id')->widget(Select2::classname(), [
+    'data' => ArrayHelper::map(TbProfileType::find()->asArray()->all(), 'profile_type_id', 'profile_type_name'),
+    'options' => [
+        'placeholder' => 'ประเภทผู้ใช้งาน...',
+    ],
+    'theme' => Select2::THEME_BOOTSTRAP,
+    'pluginOptions' => [
+        'allowClear' => true
+    ],
+]);
+?>
 <?= $form->field($profile, 'public_email') ?>
 <?= $form->field($profile, 'website') ?>
 <?= $form->field($profile, 'location') ?>
 <?= $form->field($profile, 'gravatar_email') ?>
-<?= $form->field($profile, 'bio')->textarea() ?>
+        <?= $form->field($profile, 'bio')->textarea() ?>
 
 <div class="form-group">
     <div class="col-lg-offset-3 col-lg-9">
-        <?= Html::submitButton(Yii::t('user', 'Update'), ['class' => 'btn btn-block btn-success']) ?>
+<?= Html::submitButton(Yii::t('user', 'Update'), ['class' => 'btn btn-block btn-success']) ?>
     </div>
 </div>
 
