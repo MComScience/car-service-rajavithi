@@ -181,7 +181,12 @@ $this->registerJs('var action = ' . Json::encode($action) . ';', View::POS_HEAD)
                             <?= Html::activeLabel($model, "[{$i}]user_id", ['class' => 'col-sm-2 control-label']) ?>
                             <div class="col-sm-9">
                                 <?= $form->field($model, "[{$i}]user_id", ['showLabels' => false])->widget(Select2::classname(), [
-                                    'data' => ArrayHelper::map(Profile::find()->where(['profile_type_id' => 3])->asArray()->all(), 'user_id', 'name'),
+                                    'data' => ArrayHelper::map((new \yii\db\Query())
+                                            ->select(['CONCAT(IFNULL(tb_prefix.prefix_name,\'\'),IFNULL(`profile`.first_name,\'\'),\' \',IFNULL(`profile`.last_name,\'\')) AS uname','`profile`.user_id'])
+                                            ->from('`profile`')
+                                            ->leftJoin('tb_prefix','tb_prefix.prefix_id = `profile`.prefix_id')
+                                            ->where(['`profile`.profile_type_id' => 3])
+                                            ->all(), 'user_id', 'uname'),
                                     'options' => [
                                         'placeholder' => 'พนักงานขับรถ...',
                                     ],

@@ -55,7 +55,7 @@ $this->registerJs('var data = ' . Json::encode($data) . ';', View::POS_HEAD);
                 </div>
                 <div class="mt-head-desc">
                     <h3 class="mt-username">
-                        <?= $data['uname']; ?>
+                        <?= $data['uname']; ?> (<?= $data['tel']; ?>)
                     </h3>
                     <div class="padding-v-md center-block">
                         <div class="line line-dashed"></div>

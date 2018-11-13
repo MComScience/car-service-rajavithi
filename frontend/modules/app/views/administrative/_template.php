@@ -16,7 +16,7 @@ use kartik\icons\Icon;
         <div class="mt-comment-body">
             <div class="mt-comment-info">
                 <span class="mt-comment-author">
-                    <?= $model['uname'] ?>
+                    <?= $model['uname'] ?> (<?= $model['tel']; ?>)
                 </span>
                 <span class="mt-comment-date">
                     <i class="icon-clock"></i>

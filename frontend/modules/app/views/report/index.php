@@ -60,11 +60,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                 [
                                     'attribute' => 'user_id',
                                     'value' => function ($model, $key, $index) {
-                                        return $model->profile->name;
+                                        return empty($model->profile->fullname) ? '-' : $model->profile->fullname;
                                     },
                                     'group' => true,
                                     'filterType' => GridView::FILTER_SELECT2,
-                                    'filter' => ArrayHelper::map(Profile::find()->asArray()->all(), 'user_id', 'name'),
+                                    'filter' => ArrayHelper::map((new \yii\db\Query())
+                                            ->select(['CONCAT(IFNULL(tb_prefix.prefix_name,\'\'),IFNULL(`profile`.first_name,\'\'),\' \',IFNULL(`profile`.last_name,\'\')) AS uname','`profile`.user_id'])
+                                            ->from('`profile`')
+                                            ->leftJoin('tb_prefix','tb_prefix.prefix_id = `profile`.prefix_id')
+                                            ->where(['`profile`.profile_type_id' => 3])
+                                            ->all(), 'user_id', 'uname'),
                                     'filterWidgetOptions' => [
                                         'pluginOptions' => ['allowClear' => true],
                                         'theme' => Select2::THEME_BOOTSTRAP,

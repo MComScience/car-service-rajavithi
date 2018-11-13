@@ -92,6 +92,7 @@ $today = $formatter->asDate('now', 'php:d/m/') . ($formatter->asDate('now', 'php
                                             ['content' => Icon::show('calendar') . 'วันที่', 'options' => ['style' => 'text-align: center;']],
                                             ['content' => Icon::show('clock-o') . 'เวลาออก', 'options' => ['style' => 'text-align: center;']],
                                             ['content' => Icon::show('user') . 'พนักงานขับรถ', 'options' => ['style' => 'text-align: center;']],
+                                            ['content' => Icon::show('phone') . 'เบอร์โทร', 'options' => ['style' => 'text-align: center;']],
                                             ['content' => 'ช่องจอด', 'options' => ['style' => 'text-align: center;']],
                                             ['content' => 'สถานะ', 'options' => ['style' => 'text-align: center;']],
                                             ['content' => '<i class="icon-speech"></i> หมายเหตุ', 'options' => ['style' => 'text-align: center;']],
@@ -104,6 +105,7 @@ $today = $formatter->asDate('now', 'php:d/m/') . ($formatter->asDate('now', 'php
                                         'columns' => [
                                             ['content' => '', 'options' => ['style' => 'text-align: center;', 'colspan' => 4]],
                                             ['content' => 'พนักงานขับรถ', 'options' => ['style' => 'text-align: center;']],
+                                            ['content' => '', 'options' => ['style' => 'text-align: center;']],
                                             ['content' => 'ช่องจอด', 'options' => ['style' => 'text-align: center;']],
                                             ['content' => 'สถานะ', 'options' => ['style' => 'text-align: center;']],
                                             ['content' => '', 'options' => ['style' => 'text-align: center;', 'colspan' => 2]],
@@ -139,6 +141,7 @@ $today = $formatter->asDate('now', 'php:d/m/') . ($formatter->asDate('now', 'php
                                             ["data" => "destination_date", "className" => "text-center", "type" => "date-uk"],
                                             ["data" => "destination_time", "className" => "text-center"],
                                             ["data" => "uname","orderable" => false],
+                                            ["data" => "tel", "className" => "text-center","orderable" => false],
                                             ["data" => "parking_slot_number", "className" => "text-center", "orderable" => false],
                                             ["data" => "status_name", "className" => "text-center", "orderable" => false],
                                             ["data" => "comment"],
@@ -211,7 +214,7 @@ $today = $formatter->asDate('now', 'php:d/m/') . ($formatter->asDate('now', 'php
                                                 "tag" => "a"
                                             ],
                                         ],
-                                        "select2" => [4, 5, 6]
+                                        "select2" => [4, 6, 7]
                                     ],
                                     'clientEvents' => [
                                         'error.dt' => 'function ( e, settings, techNote, message ){
@@ -280,6 +283,7 @@ $today = $formatter->asDate('now', 'php:d/m/') . ($formatter->asDate('now', 'php
                                                     ['content' => Icon::show('calendar') . 'วันที่', 'options' => ['style' => 'text-align: center;']],
                                                     ['content' => Icon::show('clock-o') . 'เวลา', 'options' => ['style' => 'text-align: center;']],
                                                     ['content' => Icon::show('user') . 'พนักงานขับรถ', 'options' => ['style' => 'text-align: center;']],
+                                                     ['content' => Icon::show('phone') . 'เบอร์โทร', 'options' => ['style' => 'text-align: center;']],
                                                     ['content' => 'ช่องจอด', 'options' => ['style' => 'text-align: center;']],
                                                     ['content' => 'สถานะ', 'options' => ['style' => 'text-align: center;']],
                                                     ['content' => '<i class="icon-speech"></i> หมายเหตุ', 'options' => ['style' => 'text-align: center;']],
@@ -291,6 +295,7 @@ $today = $formatter->asDate('now', 'php:d/m/') . ($formatter->asDate('now', 'php
                                                 'columns' => [
                                                     ['content' => '', 'options' => ['style' => 'text-align: center;', 'colspan' => 4]],
                                                     ['content' => 'พนักงานขับรถ', 'options' => ['style' => 'text-align: center;']],
+                                                    ['content' => '', 'options' => ['style' => 'text-align: center;']],
                                                     ['content' => 'ช่องจอด', 'options' => ['style' => 'text-align: center;']],
                                                     ['content' => 'สถานะ', 'options' => ['style' => 'text-align: center;']],
                                                     ['content' => '', 'options' => ['style' => 'text-align: center;']],
@@ -317,6 +322,7 @@ $today = $formatter->asDate('now', 'php:d/m/') . ($formatter->asDate('now', 'php
                                                     ["data" => "destination_date", "className" => "text-center", "type" => "date-uk"],
                                                     ["data" => "destination_time", "className" => "text-center"],
                                                     ["data" => "uname", "orderable" => false],
+                                                    ["data" => "tel", "className" => "text-center","orderable" => false],
                                                     ["data" => "parking_slot_number", "className" => "text-center", "orderable" => false, "title" => "ช่องจอด"],
                                                     ["data" => "status_name", "className" => "text-center", "orderable" => false, "title" => "สถานะ"],
                                                     ["data" => "comment"],
@@ -363,7 +369,7 @@ $today = $formatter->asDate('now', 'php:d/m/') . ($formatter->asDate('now', 'php
                                                         }'),
                                                     ],
                                                 ],
-                                                "select2" => [4, 5, 6],
+                                                "select2" => [4, 6, 7],
                                                 "order" => [[2, 'asc'], [3, 'asc']]
                                             ],
                                             'clientEvents' => [

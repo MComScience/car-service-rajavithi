@@ -242,7 +242,8 @@ class AdministrativeController extends \yii\web\Controller {
                     ->select([
                         'tb_destination.destination_id',
                         'tb_destination.destination',
-                        '`profile`.`name` as uname',
+                        'CONCAT(IFNULL(tb_prefix.prefix_name,\'\'),IFNULL(`profile`.first_name,\'\'),\' \',IFNULL(`profile`.last_name,\'\')) AS uname',
+                        '`profile`.tel',
                         'DATE_FORMAT(DATE_ADD(tb_destination.destination_date, INTERVAL 543 YEAR),\'%d/%m/%Y\') as destination_date',
                         'tb_destination.destination_time',
                         'tb_parking_slot.parking_slot_number',
@@ -253,6 +254,7 @@ class AdministrativeController extends \yii\web\Controller {
                     ->from('tb_destination')
                     ->where(['tb_destination.destination_date' => Yii::$app->formatter->asDate('now', 'php:Y-m-d')])
                     ->innerJoin('`profile`', '`profile`.user_id = tb_destination.user_id')
+                    ->leftJoin('tb_prefix', 'tb_prefix.prefix_id = `profile`.prefix_id')
                     ->innerJoin('tb_parking_slot', 'tb_parking_slot.parking_slot_id = tb_destination.parking_slot_id')
                     ->innerJoin('tb_status', 'tb_status.status_id = tb_destination.status_id')
                     ->orderBy(['tb_destination.destination_time' => SORT_ASC])
@@ -278,6 +280,9 @@ class AdministrativeController extends \yii\web\Controller {
                             ],
                             [
                                 'attribute' => 'uname',
+                            ],
+                            [
+                                'attribute' => 'tel',
                             ],
                             [
                                 'attribute' => 'destination_date',
@@ -403,7 +408,8 @@ class AdministrativeController extends \yii\web\Controller {
                     ->select([
                         'tb_destination.destination_id',
                         'tb_destination.destination',
-                        '`profile`.`name` as uname',
+                        'CONCAT(IFNULL(tb_prefix.prefix_name,\'\'),IFNULL(`profile`.first_name,\'\'),\' \',IFNULL(`profile`.last_name,\'\')) AS uname',
+                        '`profile`.tel',
                         'DATE_FORMAT(DATE_ADD(tb_destination.destination_date, INTERVAL 543 YEAR),\'%d/%m/%Y\') as destination_date',
                         'tb_destination.destination_time',
                         'tb_parking_slot.parking_slot_number',
@@ -414,6 +420,7 @@ class AdministrativeController extends \yii\web\Controller {
                     ->from('tb_destination')
                     ->where(['between', 'tb_destination.destination_date', $from_date, $to_date])
                     ->innerJoin('`profile`', '`profile`.user_id = tb_destination.user_id')
+                    ->leftJoin('tb_prefix', 'tb_prefix.prefix_id = `profile`.prefix_id')
                     ->innerJoin('tb_parking_slot', 'tb_parking_slot.parking_slot_id = tb_destination.parking_slot_id')
                     ->innerJoin('tb_status', 'tb_status.status_id = tb_destination.status_id')
                     ->orderBy(['tb_destination.destination_date' => SORT_ASC])
@@ -439,6 +446,9 @@ class AdministrativeController extends \yii\web\Controller {
                             ],
                             [
                                 'attribute' => 'uname',
+                            ],
+                            [
+                                'attribute' => 'tel',
                             ],
                             [
                                 'attribute' => 'destination_date',
@@ -477,7 +487,8 @@ class AdministrativeController extends \yii\web\Controller {
                 ->select([
                     'tb_destination.destination_id',
                     'tb_destination.destination',
-                    '`profile`.`name` as uname',
+                    'CONCAT(IFNULL(tb_prefix.prefix_name,\'\'),IFNULL(`profile`.first_name,\'\'),\' \',IFNULL(`profile`.last_name,\'\')) AS uname',
+                    '`profile`.tel',
                     'tb_destination.destination_date',
                     'tb_destination.destination_time',
                     'tb_parking_slot.parking_slot_number',
@@ -488,6 +499,7 @@ class AdministrativeController extends \yii\web\Controller {
                 ->from('tb_destination')
                 ->where(['between', 'tb_destination.destination_date', $start, $end])
                 ->innerJoin('`profile`', '`profile`.user_id = tb_destination.user_id')
+                ->leftJoin('tb_prefix', 'tb_prefix.prefix_id = `profile`.prefix_id')
                 ->innerJoin('tb_parking_slot', 'tb_parking_slot.parking_slot_id = tb_destination.parking_slot_id')
                 ->innerJoin('tb_status', 'tb_status.status_id = tb_destination.status_id')
                 ->orderBy(['tb_destination.destination_date' => SORT_ASC])
@@ -515,7 +527,8 @@ class AdministrativeController extends \yii\web\Controller {
                     ->select([
                         'tb_destination.destination_id',
                         'tb_destination.destination',
-                        '`profile`.`name` as uname',
+                        'CONCAT(IFNULL(tb_prefix.prefix_name,\'\'),IFNULL(`profile`.first_name,\'\'),\' \',IFNULL(`profile`.last_name,\'\')) AS uname',
+                        '`profile`.tel',
                         'DATE_FORMAT(DATE_ADD(tb_destination.destination_date, INTERVAL 543 YEAR),\'%d/%m/%Y\') as destination_date',
                         'tb_destination.destination_time',
                         'tb_parking_slot.parking_slot_number',
@@ -529,6 +542,7 @@ class AdministrativeController extends \yii\web\Controller {
                         'tb_destination.status_id' => [2, 3, 4],
                     ])
                     ->innerJoin('`profile`', '`profile`.user_id = tb_destination.user_id')
+                    ->leftJoin('tb_prefix', 'tb_prefix.prefix_id = `profile`.prefix_id')
                     ->innerJoin('tb_parking_slot', 'tb_parking_slot.parking_slot_id = tb_destination.parking_slot_id')
                     ->innerJoin('tb_status', 'tb_status.status_id = tb_destination.status_id')
                     ->orderBy(['tb_destination.destination_time' => SORT_DESC])
@@ -554,6 +568,9 @@ class AdministrativeController extends \yii\web\Controller {
                             ],
                             [
                                 'attribute' => 'uname',
+                            ],
+                            [
+                                'attribute' => 'tel',
                             ],
                             [
                                 'attribute' => 'destination_date',
@@ -693,7 +710,7 @@ class AdministrativeController extends \yii\web\Controller {
                 ->select([
                     'tb_destination.destination_id',
                     'tb_destination.destination',
-                    '`profile`.`name` as uname',
+                    'CONCAT(IFNULL(tb_prefix.prefix_name,\'\'),IFNULL(`profile`.first_name,\'\'),\' \',IFNULL(`profile`.last_name,\'\')) AS uname',
                     'DATE_FORMAT(DATE_ADD(tb_destination.destination_date, INTERVAL 543 YEAR),\'%d/%m/%Y\') as destination_date',
                     'tb_destination.destination_time',
                     'tb_parking_slot.parking_slot_number',
@@ -704,6 +721,7 @@ class AdministrativeController extends \yii\web\Controller {
                 ->from('tb_destination')
                 ->where(['tb_destination.destination_date' => Yii::$app->formatter->asDate('now', 'php:Y-m-d')])
                 ->innerJoin('`profile`', '`profile`.user_id = tb_destination.user_id')
+                ->leftJoin('tb_prefix', 'tb_prefix.prefix_id = `profile`.prefix_id')
                 ->innerJoin('tb_parking_slot', 'tb_parking_slot.parking_slot_id = tb_destination.parking_slot_id')
                 ->innerJoin('tb_status', 'tb_status.status_id = tb_destination.status_id')
                 ->orderBy(['tb_destination.destination_time' => SORT_ASC])
@@ -731,7 +749,7 @@ class AdministrativeController extends \yii\web\Controller {
                 ->select([
                     'tb_destination.destination_id',
                     'tb_destination.destination',
-                    '`profile`.`name` as uname',
+                    'CONCAT(IFNULL(tb_prefix.prefix_name,\'\'),IFNULL(`profile`.first_name,\'\'),\' \',IFNULL(`profile`.last_name,\'\')) AS uname',
                     'DATE_FORMAT(DATE_ADD(tb_destination.destination_date, INTERVAL 543 YEAR),\'%d/%m/%Y\') as destination_date',
                     'tb_destination.destination_time',
                     'tb_parking_slot.parking_slot_number',
@@ -742,6 +760,7 @@ class AdministrativeController extends \yii\web\Controller {
                 ->from('tb_destination')
                 ->where(['between', 'tb_destination.destination_date', $from_date, $to_date])
                 ->innerJoin('`profile`', '`profile`.user_id = tb_destination.user_id')
+                ->leftJoin('tb_prefix', 'tb_prefix.prefix_id = `profile`.prefix_id')
                 ->innerJoin('tb_parking_slot', 'tb_parking_slot.parking_slot_id = tb_destination.parking_slot_id')
                 ->innerJoin('tb_status', 'tb_status.status_id = tb_destination.status_id')
                 ->orderBy(['tb_destination.destination_date' => SORT_ASC])

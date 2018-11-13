@@ -13,6 +13,7 @@ use yii\helpers\Html;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use frontend\modules\app\models\TbProfileType;
+use metronic\user\models\TbPrefix;
 /**
  * @var yii\web\View $this
  * @var dektrium\user\models\User $user
@@ -34,8 +35,6 @@ $form = ActiveForm::begin([
             ],
         ]);
 ?>
-
-<?= $form->field($profile, 'name') ?>
 <?=
 $form->field($profile, 'profile_type_id')->widget(Select2::classname(), [
     'data' => ArrayHelper::map(TbProfileType::find()->asArray()->all(), 'profile_type_id', 'profile_type_name'),
@@ -48,11 +47,26 @@ $form->field($profile, 'profile_type_id')->widget(Select2::classname(), [
     ],
 ]);
 ?>
+<?=
+$form->field($profile, 'prefix_id')->widget(Select2::classname(), [
+    'data' => ArrayHelper::map(TbPrefix::find()->asArray()->all(), 'prefix_id', 'prefix_name'),
+    'options' => [
+        'placeholder' => 'คำนำหน้า...',
+    ],
+    'theme' => Select2::THEME_BOOTSTRAP,
+    'pluginOptions' => [
+        'allowClear' => true
+    ],
+]);
+?>
+<?= $form->field($profile, 'first_name') ?>
+<?= $form->field($profile, 'last_name') ?>
+<?= $form->field($profile, 'tel')->textInput(['maxLength' => 10]) ?>
 <?= $form->field($profile, 'public_email') ?>
 <?= $form->field($profile, 'website') ?>
 <?= $form->field($profile, 'location') ?>
 <?= $form->field($profile, 'gravatar_email') ?>
-        <?= $form->field($profile, 'bio')->textarea() ?>
+<?= $form->field($profile, 'bio')->textarea() ?>
 
 <div class="form-group">
     <div class="col-lg-offset-3 col-lg-9">

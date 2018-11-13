@@ -50,13 +50,14 @@ class CarController extends \yii\web\Controller
             ->select([
                 'tb_destination.destination_id',
                 'tb_destination.destination',
-                '`profile`.`name` as uname',
+                'CONCAT(IFNULL(tb_prefix.prefix_name,\'\'),IFNULL(`profile`.first_name,\'\'),\' \',IFNULL(`profile`.last_name,\'\')) AS uname',
                 'DATE_FORMAT(DATE_ADD(tb_destination.destination_date, INTERVAL 543 YEAR),\'%d/%m/%Y\') as destination_date',
                 'tb_destination.destination_time',
                 'tb_parking_slot.parking_slot_number',
                 'tb_status.status_name',
                 'tb_destination.status_id',
-                'tb_destination.`comment`'
+                'tb_destination.`comment`',
+                '`profile`.tel'
             ])
             ->from('tb_destination')
             ->where([
@@ -64,6 +65,7 @@ class CarController extends \yii\web\Controller
                 'tb_destination.status_id' => [2, 3, 4],
             ])
             ->innerJoin('`profile`', '`profile`.user_id = tb_destination.user_id')
+            ->leftJoin('tb_prefix', 'tb_prefix.prefix_id = `profile`.prefix_id')
             ->innerJoin('tb_parking_slot', 'tb_parking_slot.parking_slot_id = tb_destination.parking_slot_id')
             ->innerJoin('tb_status', 'tb_status.status_id = tb_destination.status_id')
             ->orderBy(['tb_destination.destination_time' => SORT_ASC])
@@ -91,10 +93,11 @@ class CarController extends \yii\web\Controller
             ->select([
                 'TIME_FORMAT(tb_destination.destination_time,\'%H:%i\') AS led_time',
                 'tb_destination.destination as led_destination',
-                '`profile`.`name` as led_username'
+                'CONCAT(IFNULL(tb_prefix.prefix_name,\'\'),IFNULL(`profile`.first_name,\'\'),\' \',IFNULL(`profile`.tel,\'\')) AS led_username'
             ])
             ->from('tb_destination')
             ->innerJoin('`profile`','`profile`.user_id = tb_destination.user_id')
+            ->leftJoin('tb_prefix', 'tb_prefix.prefix_id = `profile`.prefix_id')
             ->where('tb_destination.destination_date >= CURRENT_DATE AND tb_destination.destination_time >= CURRENT_TIME')
             ->andWhere(['tb_destination.status_id' => 2])
             ->orderBy([

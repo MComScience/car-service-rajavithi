@@ -15,13 +15,11 @@ use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\Pjax;
 
-
 /**
  * @var \yii\web\View $this
  * @var \yii\data\ActiveDataProvider $dataProvider
  * @var \dektrium\user\models\UserSearch $searchModel
  */
-
 $this->title = Yii::t('user', 'Manage users');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -32,7 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php Pjax::begin() ?>
 
-<?= GridView::widget([
+<?=
+
+GridView::widget([
     'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
     'layout' => "{items}\n{pager}",
@@ -50,14 +50,26 @@ $this->params['breadcrumbs'][] = $this->title;
         'username',
         'email:email',
         [
-            'attribute' => 'registration_ip',
+            'header' => 'ชื่อ',
             'value' => function ($model) {
-                return $model->registration_ip == null
-                    ? '<span class="not-set">' . Yii::t('user', '(not set)') . '</span>'
-                    : $model->registration_ip;
+                return isset($model->profile) ? $model->profile->fullname : '';
             },
             'format' => 'html',
         ],
+        [
+            'header' => 'เบอร์โทร',
+            'value' => function ($model) {
+                return isset($model->profile) ? $model->profile->tel : '';
+            },
+            'format' => 'html',
+        ],
+//        [
+//            'attribute' => 'registration_ip',
+//            'value' => function ($model) {
+//                return $model->registration_ip == null ? '<span class="not-set">' . Yii::t('user', '(not set)') . '</span>' : $model->registration_ip;
+//            },
+//            'format' => 'html',
+//        ],
         [
             'attribute' => 'created_at',
             'value' => function ($model) {
@@ -68,7 +80,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             },
         ],
-
         [
             'attribute' => 'last_login_at',
             'value' => function ($model) {
@@ -90,9 +101,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             </div>';
                 } else {
                     return Html::a(Yii::t('user', 'Confirm'), ['confirm', 'id' => $model->id], [
-                        'class' => 'btn btn-xs btn-success btn-block',
-                        'data-method' => 'post',
-                        'data-confirm' => Yii::t('user', 'Are you sure you want to confirm this user?'),
+                                'class' => 'btn btn-xs btn-success btn-block',
+                                'data-method' => 'post',
+                                'data-confirm' => Yii::t('user', 'Are you sure you want to confirm this user?'),
                     ]);
                 }
             },
@@ -104,23 +115,24 @@ $this->params['breadcrumbs'][] = $this->title;
             'value' => function ($model) {
                 if ($model->isBlocked) {
                     return Html::a(Yii::t('user', 'Unblock'), ['block', 'id' => $model->id], [
-                        'class' => 'btn btn-xs btn-success btn-block',
-                        'data-method' => 'post',
-                        'data-confirm' => Yii::t('user', 'Are you sure you want to unblock this user?'),
+                                'class' => 'btn btn-xs btn-success btn-block',
+                                'data-method' => 'post',
+                                'data-confirm' => Yii::t('user', 'Are you sure you want to unblock this user?'),
                     ]);
                 } else {
                     return Html::a(Yii::t('user', 'Block'), ['block', 'id' => $model->id], [
-                        'class' => 'btn btn-xs btn-danger btn-block',
-                        'data-method' => 'post',
-                        'data-confirm' => Yii::t('user', 'Are you sure you want to block this user?'),
+                                'class' => 'btn btn-xs btn-danger btn-block',
+                                'data-method' => 'post',
+                                'data-confirm' => Yii::t('user', 'Are you sure you want to block this user?'),
                     ]);
                 }
             },
             'format' => 'raw',
         ],
         [
-            'class' => 'yii\grid\ActionColumn',
+            'class' => 'kartik\grid\ActionColumn',
             'template' => '{switch} {resend_password} {update} {delete}',
+            'noWrap' => true,
             'buttons' => [
                 'resend_password' => function ($url, $model, $key) {
                     if (\Yii::$app->user->identity->isAdmin && !$model->isAdmin) {
@@ -133,15 +145,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 'switch' => function ($url, $model) {
                     if (\Yii::$app->user->identity->isAdmin && $model->id != Yii::$app->user->id && Yii::$app->getModule('user')->enableImpersonateUser) {
                         return Html::a('<span class="glyphicon glyphicon-user"></span>', ['/user/admin/switch', 'id' => $model->id], [
-                            'title' => Yii::t('user', 'Become this user'),
-                            'data-confirm' => Yii::t('user', 'Are you sure you want to switch to this user for the rest of this Session?'),
-                            'data-method' => 'POST',
+                                    'title' => Yii::t('user', 'Become this user'),
+                                    'data-confirm' => Yii::t('user', 'Are you sure you want to switch to this user for the rest of this Session?'),
+                                    'data-method' => 'POST',
                         ]);
                     }
                 }
             ]
         ],
     ],
-]); ?>
+]);
+?>
 
 <?php Pjax::end() ?>

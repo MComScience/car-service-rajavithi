@@ -11,7 +11,7 @@
  Target Server Version : 100129
  File Encoding         : 65001
 
- Date: 12/11/2018 15:05:07
+ Date: 13/11/2018 16:53:51
 */
 
 SET NAMES utf8mb4;
@@ -983,6 +983,10 @@ CREATE TABLE `profile`  (
   `avatar_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `avatar_base_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `profile_type_id` int(11) NULL DEFAULT NULL COMMENT 'ประเภทผู้ใช้งาน',
+  `tel` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'เบอร์โทร',
+  `prefix_id` int(11) NULL DEFAULT NULL COMMENT 'คำนำหน้า',
+  `first_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'ชื่อ',
+  `last_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT 'นามสกุล',
   PRIMARY KEY (`user_id`) USING BTREE,
   CONSTRAINT `fk_user_profile` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Compact;
@@ -990,12 +994,12 @@ CREATE TABLE `profile`  (
 -- ----------------------------
 -- Records of profile
 -- ----------------------------
-INSERT INTO `profile` VALUES (1, 'Admin', '', '', 'd41d8cd98f00b204e9800998ecf8427e', '', '', '', 'Asia/Bangkok', NULL, NULL, 1);
-INSERT INTO `profile` VALUES (2, 'นายอรุณ นามเมือง', '', '', 'd41d8cd98f00b204e9800998ecf8427e', '', '', '', NULL, NULL, NULL, 3);
-INSERT INTO `profile` VALUES (3, 'นายพิชิต สมบูรณ์ทรัพย์', '', '', 'd41d8cd98f00b204e9800998ecf8427e', '', '', '', NULL, NULL, NULL, 3);
-INSERT INTO `profile` VALUES (4, 'นายวิโรจน์ เฟื่องฟู', '', '', 'd41d8cd98f00b204e9800998ecf8427e', '', '', '', NULL, NULL, NULL, 3);
-INSERT INTO `profile` VALUES (5, 'นายจรูญศักดิ์ ประภาศรี', '', '', 'd41d8cd98f00b204e9800998ecf8427e', '', '', '', NULL, NULL, NULL, 3);
-INSERT INTO `profile` VALUES (6, '', '', '', 'd41d8cd98f00b204e9800998ecf8427e', '', '', '', NULL, NULL, NULL, 2);
+INSERT INTO `profile` VALUES (1, 'Admin', '', '', 'd41d8cd98f00b204e9800998ecf8427e', '', '', '', 'Asia/Bangkok', NULL, NULL, 1, '', NULL, NULL, NULL);
+INSERT INTO `profile` VALUES (2, 'นายอรุณ นามเมือง', '', '', 'd41d8cd98f00b204e9800998ecf8427e', '', '', '', NULL, NULL, NULL, 3, '', NULL, NULL, NULL);
+INSERT INTO `profile` VALUES (3, 'นายพิชิต สมบูรณ์ทรัพย์', '', '', 'd41d8cd98f00b204e9800998ecf8427e', '', '', '', NULL, NULL, NULL, 3, '', NULL, NULL, NULL);
+INSERT INTO `profile` VALUES (4, 'นายวิโรจน์ เฟื่องฟู', '', '', 'd41d8cd98f00b204e9800998ecf8427e', '', '', '', NULL, NULL, NULL, 3, '0812345678', 1, 'สมบัติ', 'ชาติชาย');
+INSERT INTO `profile` VALUES (5, 'นายจรูญศักดิ์ ประภาศรี', '', '', 'd41d8cd98f00b204e9800998ecf8427e', '', '', '', NULL, NULL, NULL, 3, '0845195706', 1, 'จรูญศักดิ์', 'ประภาศรี');
+INSERT INTO `profile` VALUES (6, '', '', '', 'd41d8cd98f00b204e9800998ecf8427e', '', '', '', NULL, NULL, NULL, 2, '', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for social_account
@@ -1060,7 +1064,7 @@ CREATE TABLE `tb_destination`  (
   `confirm_at` datetime(0) NULL DEFAULT NULL COMMENT 'เวลายืนยัน',
   `comment` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'หมายเหตุ',
   PRIMARY KEY (`destination_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of tb_destination
@@ -1081,6 +1085,8 @@ INSERT INTO `tb_destination` VALUES (14, 'โรงพยาบาลทหา�
 INSERT INTO `tb_destination` VALUES (15, 'มหาวิทยาลัยจุฬาลงกรณ์', 3, '2018-11-12', '15:00:00', 2, 3, 1, '2018-11-12 14:46:22', 1, '2018-11-12 14:47:17', '2018-11-12 00:00:00', '');
 INSERT INTO `tb_destination` VALUES (16, 'โรงพยาบาลธรรมศาสตร์', 5, '2018-11-12', '15:40:00', 1, 2, 1, '2018-11-12 14:53:35', 1, '2018-11-12 14:53:35', NULL, '');
 INSERT INTO `tb_destination` VALUES (17, 'มหาวิทยาลัยจุฬาลงกรณ์ test', 4, '2018-11-12', '16:50:00', 3, 2, 1, '2018-11-12 14:54:03', 1, '2018-11-12 14:54:03', NULL, '');
+INSERT INTO `tb_destination` VALUES (18, 'โรงพยาบาลทหาร', 5, '2018-11-13', '16:00:00', 1, 3, 1, '2018-11-13 15:08:46', 1, '2018-11-13 16:52:35', '2018-11-13 00:00:00', '');
+INSERT INTO `tb_destination` VALUES (19, 'ฟิวเจอร์รังสิต ถนนวิภาวดี', 4, '2018-11-13', '17:20:00', 1, 2, 1, '2018-11-13 16:52:25', 1, '2018-11-13 16:52:25', NULL, '');
 
 -- ----------------------------
 -- Table structure for tb_parking_slot
@@ -1099,6 +1105,23 @@ INSERT INTO `tb_parking_slot` VALUES (1, '1');
 INSERT INTO `tb_parking_slot` VALUES (2, '2');
 INSERT INTO `tb_parking_slot` VALUES (3, '3');
 INSERT INTO `tb_parking_slot` VALUES (4, 'สำรอง');
+
+-- ----------------------------
+-- Table structure for tb_prefix
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_prefix`;
+CREATE TABLE `tb_prefix`  (
+  `prefix_id` int(11) NOT NULL AUTO_INCREMENT,
+  `prefix_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'คำนำหน้า',
+  PRIMARY KEY (`prefix_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of tb_prefix
+-- ----------------------------
+INSERT INTO `tb_prefix` VALUES (1, 'นาย');
+INSERT INTO `tb_prefix` VALUES (2, 'นาง');
+INSERT INTO `tb_prefix` VALUES (3, 'นางสาว');
 
 -- ----------------------------
 -- Table structure for tb_profile_type
@@ -1175,7 +1198,7 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'admin', 'q-car@gmail.com', '$2y$10$XAZvjriPCeMqBF9ywmoSZ.Wts8x9Q8ank41nogJ3naKVskEosIUPO', 'xMOl5Zkmri6IYRmiDS1tzEnR0HiLYlog', 1537448761, NULL, NULL, NULL, 1537448761, 1537448761, 0, 1541994934);
+INSERT INTO `user` VALUES (1, 'admin', 'q-car@gmail.com', '$2y$10$XAZvjriPCeMqBF9ywmoSZ.Wts8x9Q8ank41nogJ3naKVskEosIUPO', 'xMOl5Zkmri6IYRmiDS1tzEnR0HiLYlog', 1537448761, NULL, NULL, NULL, 1537448761, 1537448761, 0, 1542094854);
 INSERT INTO `user` VALUES (2, 'user1', 'user1@gmail.com', '$2y$10$VXLEF1GES6kDULqDuGCkVuV9a1ePDtPLArwVXmEYVTNAonkvj/wPS', 'pN1ciKauwIiDxKg3whwMdXk-Dw1XK5Ru', 1537542139, NULL, NULL, '127.0.0.1', 1537542139, 1537542139, 0, NULL);
 INSERT INTO `user` VALUES (3, 'user2', 'user2@gmail.com', '$2y$10$CfyknuDNeqADtn2T0cErYO9c7FUVtyJN2rK/XXF8YE/LIzeoYhnxO', 'vLzoA2oQXq1dliunw7SuQ7QU7TneZSwp', 1537542182, NULL, NULL, '127.0.0.1', 1537542182, 1537542182, 0, NULL);
 INSERT INTO `user` VALUES (4, 'user3', 'user3@gmail.com', '$2y$10$Dj4D1HqQ1MLSadvJhQ3/9u.BS9fxTzMDMyUoc7odXxEJ1MTOZbFV6', 'v4nTwqbLYb3YdooyWf0mHKiM51R322et', 1537542227, NULL, NULL, '127.0.0.1', 1537542227, 1537542227, 0, NULL);

@@ -15,6 +15,8 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\web\JsExpression;
 use trntv\filekit\widget\Upload;
+use kartik\select2\Select2;
+use metronic\user\models\TbPrefix;
 /**
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
@@ -53,8 +55,25 @@ $this->params['breadcrumbs'][] = $this->title;
                     'url'=>['file-upload'],
                     'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
                 ]) ?>
+                
+                <?= $form->field($model, 'prefix_id')->widget(Select2::classname(), [
+                    'data' => ArrayHelper::map(TbPrefix::find()->asArray()->all(), 'prefix_id', 'prefix_name'),
+                    'options' => [
+                        'placeholder' => 'คำนำหน้า...',
+                    ],
+                    'theme' => Select2::THEME_BOOTSTRAP,
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]); ?>
 
-                <?= $form->field($model, 'name') ?>
+                <?= $form->field($model, 'first_name') ?>
+                
+                <?= $form->field($model, 'last_name') ?>
+                
+                <?= $form->field($model, 'tel')->textInput([
+                    'maxLength' => 10
+                ]) ?>
 
                 <?= $form->field($model, 'public_email') ?>
 
