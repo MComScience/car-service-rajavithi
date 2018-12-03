@@ -99,7 +99,7 @@ class CarController extends \yii\web\Controller
             ->innerJoin('`profile`','`profile`.user_id = tb_destination.user_id')
             ->leftJoin('tb_prefix', 'tb_prefix.prefix_id = `profile`.prefix_id')
             ->where('tb_destination.destination_date >= CURRENT_DATE AND tb_destination.destination_time >= CURRENT_TIME')
-            ->andWhere(['tb_destination.status_id' => 2])
+            ->andWhere(['tb_destination.status_id' => 3])
             ->orderBy([
                 'tb_destination.destination_date' => SORT_ASC,
                 'tb_destination.destination_time' => SORT_ASC
