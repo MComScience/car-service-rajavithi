@@ -89,7 +89,7 @@ class TbDestination extends \yii\db\ActiveRecord
     {
         return [
             [['destination_date', 'destination_time', 'parking_slot_id'], 'unique', 'targetAttribute' => ['destination_date', 'destination_time', 'parking_slot_id']],
-            [['destination', 'user_id', 'destination_date', 'destination_time', 'parking_slot_id'], 'required'],
+            [['destination', 'destination_date', 'destination_time', 'parking_slot_id'], 'required'],
             [['user_id', 'parking_slot_id', 'created_by', 'updated_by', 'status_id'], 'integer'],
             [['destination_date', 'created_at', 'updated_at', 'confirm_at'], 'safe'],
             [['destination', 'comment'], 'string', 'max' => 255],

@@ -103,7 +103,7 @@ class AdministrativeController extends \yii\web\Controller {
                             foreach ($models as $model) {
                                 $msg = Url::base(true) .
                                         Url::to(['/app/car/user-confirm', 'id' => $model['destination_id']]) .
-                                        ' แจ้ง ' . $model->profile->name .
+                                        ' แจ้ง ' . ($model->profile ? $model->profile->name : '' ) .
                                         ' เวลาเดินรถ ' . Yii::$app->formatter->asDate($model['destination_time'], 'php:H:i') . ' น.' .
                                         ' ไป ' . $model['destination'] .
                                         ' กรุณายืนยันเพื่อรับทราบ!';
@@ -253,7 +253,7 @@ class AdministrativeController extends \yii\web\Controller {
                     ])
                     ->from('tb_destination')
                     ->where(['tb_destination.destination_date' => Yii::$app->formatter->asDate('now', 'php:Y-m-d')])
-                    ->innerJoin('`profile`', '`profile`.user_id = tb_destination.user_id')
+                    ->leftJoin('`profile`', '`profile`.user_id = tb_destination.user_id')
                     ->leftJoin('tb_prefix', 'tb_prefix.prefix_id = `profile`.prefix_id')
                     ->innerJoin('tb_parking_slot', 'tb_parking_slot.parking_slot_id = tb_destination.parking_slot_id')
                     ->innerJoin('tb_status', 'tb_status.status_id = tb_destination.status_id')
@@ -280,6 +280,9 @@ class AdministrativeController extends \yii\web\Controller {
                             ],
                             [
                                 'attribute' => 'uname',
+                                'value' => function ($model){
+                                    return empty($model['uname']) || $model['uname'] == ' ' ?  '-' : $model['uname'];
+                                }
                             ],
                             [
                                 'attribute' => 'tel',
@@ -419,7 +422,7 @@ class AdministrativeController extends \yii\web\Controller {
                     ])
                     ->from('tb_destination')
                     ->where(['between', 'tb_destination.destination_date', $from_date, $to_date])
-                    ->innerJoin('`profile`', '`profile`.user_id = tb_destination.user_id')
+                    ->leftJoin('`profile`', '`profile`.user_id = tb_destination.user_id')
                     ->leftJoin('tb_prefix', 'tb_prefix.prefix_id = `profile`.prefix_id')
                     ->innerJoin('tb_parking_slot', 'tb_parking_slot.parking_slot_id = tb_destination.parking_slot_id')
                     ->innerJoin('tb_status', 'tb_status.status_id = tb_destination.status_id')
@@ -446,6 +449,9 @@ class AdministrativeController extends \yii\web\Controller {
                             ],
                             [
                                 'attribute' => 'uname',
+                                'value' => function ($model){
+                                    return empty($model['uname']) || $model['uname'] == ' ' ?  '-' : $model['uname'];
+                                }
                             ],
                             [
                                 'attribute' => 'tel',
@@ -498,7 +504,7 @@ class AdministrativeController extends \yii\web\Controller {
                 ])
                 ->from('tb_destination')
                 ->where(['between', 'tb_destination.destination_date', $start, $end])
-                ->innerJoin('`profile`', '`profile`.user_id = tb_destination.user_id')
+                ->leftJoin('`profile`', '`profile`.user_id = tb_destination.user_id')
                 ->leftJoin('tb_prefix', 'tb_prefix.prefix_id = `profile`.prefix_id')
                 ->innerJoin('tb_parking_slot', 'tb_parking_slot.parking_slot_id = tb_destination.parking_slot_id')
                 ->innerJoin('tb_status', 'tb_status.status_id = tb_destination.status_id')
@@ -509,7 +515,7 @@ class AdministrativeController extends \yii\web\Controller {
             $event = new Event();
             $event->setAttributes([
                 'id' => $model['destination_id'],
-                'title' => 'ปลายทาง : ' . $model['destination'] . ' พนักงานขับรถ : ' . $model['uname'],
+                'title' => 'ปลายทาง : ' . $model['destination'] . ' พนักงานขับรถ : ' . (empty($model['uname']) || $model['uname'] == ' '  ? '-' : $model['uname']) ,
                 'description' => '<p style="margin-bottom: 0px;margin-top: 0px;">เวลา : ' . Yii::$app->formatter->asDate($model['destination_time'], 'php:H:i') . '</p>' . 'ปลายทาง : ' . $model['destination'] . ' <p style="margin-bottom: 0px;margin-top: 0px;"> พนักงานขับรถ : ' . $model['uname'] . '</p>',
                 'start' => date('Y-m-d\TH:i:s\Z', strtotime($model['destination_date'] . ' ' . $model['destination_time'])),
                 'end' => date('Y-m-d\TH:i:s\Z', strtotime($model['destination_date'] . ' ' . $model['destination_time'])),
