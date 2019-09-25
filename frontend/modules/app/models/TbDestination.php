@@ -93,7 +93,7 @@ class TbDestination extends \yii\db\ActiveRecord
             [['user_id', 'parking_slot_id', 'created_by', 'updated_by', 'status_id'], 'integer'],
             [['destination_date', 'created_at', 'updated_at', 'confirm_at'], 'safe'],
             [['destination', 'comment'], 'string', 'max' => 255],
-            ['destination_time', 'validateTime'],
+//            ['destination_time', 'validateTime'],
         ];
     }
 
